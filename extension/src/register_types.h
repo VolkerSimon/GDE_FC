@@ -1,7 +1,7 @@
-#ifndef SUMMATOR_REGISTER_TYPES_H
-#define SUMMATOR_REGISTER_TYPES_H
+#ifndef FileInfo_REGISTER_TYPES_H
+#define FileInfo_REGISTER_TYPES_H
 
-void initialize_summator_types();
-void uninitialize_summator_types();
+void initialize_fileinfo_types();
+void uninitialize_fileinfo_types();
 
-#endif // SUMMATOR_REGISTER_TYPES_H
+#endif // FileInfo_REGISTER_TYPES_H
