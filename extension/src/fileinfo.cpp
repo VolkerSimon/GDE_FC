@@ -14,45 +14,68 @@ int FileInfo::set_file(godot::String pathStr)
     HANDLE hFile;
     WIN32_FILE_ATTRIBUTE_DATA fInfo;   
     
+
     std::string std_string=pathStr.utf8().get_data();
     LPCSTR lpcstr = std_string.c_str();  
     GetFileAttributesExA(lpcstr, GetFileExInfoStandard, &fInfo);
 
+
     FILETIME creationTime = fInfo.ftCreationTime;
-    FileTimeToSystemTime(&creationTime, &systemtime);
+    FileTimeToSystemTime(&creationTime, &creation_systemtime);
+    creation_time["year"]=creation_systemtime.wYear;
+    creation_time["month"]=creation_systemtime.wMonth;
+    creation_time["day"]=creation_systemtime.wDay;
+    creation_time["hour"]=creation_systemtime.wHour;
+    creation_time["mintute"]=creation_systemtime.wMinute;
+    creation_time["second"]=creation_systemtime.wDay;
+
+    FILETIME modifiedTime = fInfo.ftLastWriteTime;
+    FileTimeToSystemTime(&modifiedTime, &modified_systemtime);
+    modified_time["year"]=modified_systemtime.wYear;
+    modified_time["month"]=modified_systemtime.wMonth;
+    modified_time["day"]=modified_systemtime.wDay;
+    modified_time["hour"]=modified_systemtime.wHour;
+    modified_time["mintute"]=modified_systemtime.wMinute;
+    modified_time["second"]=modified_systemtime.wDay;
+
+    FILETIME lastAccessTime = fInfo.ftLastWriteTime;
+    FileTimeToSystemTime(&lastAccessTime, &lastaccess_systemtime);
+    lastaccess_time["year"]=lastaccess_systemtime.wYear;
+    lastaccess_time["month"]=lastaccess_systemtime.wMonth;
+    lastaccess_time["day"]=lastaccess_systemtime.wDay;
+    lastaccess_time["hour"]=lastaccess_systemtime.wHour;
+    lastaccess_time["mintute"]=lastaccess_systemtime.wMinute;
+    lastaccess_time["second"]=lastaccess_systemtime.wDay;
+
+
     return 1;
 }
 
 
-int FileInfo::day() const
+godot::Dictionary  FileInfo::get_file_creation_time() 
 {
-    return systemtime.wDay;
+    return creation_time;
 }
 
-int FileInfo::dayofweek() const
+godot::Dictionary  FileInfo::get_file_modified_time() 
 {
-    return systemtime.wDayOfWeek;
+    return modified_time;
 }
-int FileInfo::month() const
+godot::Dictionary  FileInfo::get_file_lastaccess_time() 
 {
-    return systemtime.wDay;
-}
-
-int FileInfo::year() const
-{
-    return systemtime.wYear;
+    return lastaccess_time;
 }
 
-String FileInfo::get_filedate() 
+String FileInfo::get_fileCreationDate_string() 
 {
    
-    std::string s = std::to_string(systemtime.wDay)+"/"+ std::to_string(systemtime.wMonth)+"/"+std::to_string(systemtime.wYear)+"   "+std::to_string(systemtime.wHour)+":"+std::to_string(systemtime.wMinute);
+    std::string s = std::to_string(creation_systemtime.wYear)+"-"+ std::to_string(creation_systemtime.wMonth)+"-"+std::to_string(creation_systemtime.wDay)+"  "+std::to_string(creation_systemtime.wHour)+":"+std::to_string(creation_systemtime.wMinute)+":"+std::to_string(creation_systemtime.wSecond);
     return godot::String(s.c_str());
 }
 
-String FileInfo::get_filedatetime() 
+String FileInfo::get_fileCreationDateTime_string() 
 {
-    std::string s = std::to_string(systemtime.wDay)+"/"+ std::to_string(systemtime.wMonth)+"/"+std::to_string(systemtime.wYear);
+    std::string s = std::to_string(creation_systemtime.wYear)+"-"+ std::to_string(creation_systemtime.wMonth)+"-"+std::to_string(creation_systemtime.wDay);
     return godot::String(s.c_str());
 }
 
@@ -60,10 +83,10 @@ String FileInfo::get_filedatetime()
 void FileInfo::_bind_methods()
 {
     ClassDB::bind_method(D_METHOD("set_file"), &FileInfo::set_file);
-    ClassDB::bind_method(D_METHOD("day"), &FileInfo::day);
-    ClassDB::bind_method(D_METHOD("dayofweek"), &FileInfo::dayofweek);
-    ClassDB::bind_method(D_METHOD("month"), &FileInfo::month);
-    ClassDB::bind_method(D_METHOD("year"), &FileInfo::year);
-    ClassDB::bind_method(D_METHOD("get_filedate"), &FileInfo::get_filedate);
-    ClassDB::bind_method(D_METHOD("get_filedatetime"), &FileInfo::get_filedatetime);
+    ClassDB::bind_method(D_METHOD("get_fileCreationDate_string"), &FileInfo::get_fileCreationDate_string);
+    ClassDB::bind_method(D_METHOD("get_fileCreationDateTime_string"), &FileInfo::get_fileCreationDateTime_string);
+    ClassDB::bind_method(D_METHOD("get_file_creation_time"), &FileInfo::get_file_creation_time);
+    ClassDB::bind_method(D_METHOD("get_file_modified_time"), &FileInfo::get_file_modified_time);
+    ClassDB::bind_method(D_METHOD("get_file_lastaccess_time"), &FileInfo::get_file_lastaccess_time);
+    
 }
