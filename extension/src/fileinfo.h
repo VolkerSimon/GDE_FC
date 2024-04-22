@@ -26,6 +26,10 @@ public:
     int set_file(godot::String pathStr);
     godot::String get_fileCreationDate_string();
     godot::String get_fileCreationDateTime_string();
+    godot::String get_fileModifiedDate_string();
+    godot::String get_fileModifiedDateTime_string();
+    godot::String get_fileLastAccessDate_string();
+    godot::String get_fileLastAccessDateTime_string();
     godot::Dictionary get_file_creation_time();
     godot::Dictionary get_file_modified_time();
     godot::Dictionary get_file_lastaccess_time();
