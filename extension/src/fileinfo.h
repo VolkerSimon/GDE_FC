@@ -16,6 +16,9 @@ class FileInfo : public RefCounted
     godot::Dictionary creation_time;
     godot::Dictionary modified_time;
     godot::Dictionary lastaccess_time;
+    String FileInfo::CreateISODateTimeString(SYSTEMTIME inTime);
+    String FileInfo::CreateISODateString(SYSTEMTIME inTime);
+
 
 protected:
     static void _bind_methods();
