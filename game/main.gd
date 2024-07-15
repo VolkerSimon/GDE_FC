@@ -1,8 +1,11 @@
 extends Node
 
 func _ready() -> void:
+	pass
+
+func _on_file_dialog_file_selected(path):
 	var s = FileInfo.new()
-	s.set_file(("c:\\vfcompat.dll"))
+	s.set_file(path)
 	var t=s.get_file_creation_time()
 	print("Godot date format:",s.get_file_creation_time())
 	
@@ -21,7 +24,15 @@ func _ready() -> void:
 	print("ISO Date only:",s.get_fileLastAccessDate_string())
 	print("ISO Date Time:",s.get_fileLastAccessDateTime_string())
 	
+	print ()
+	print ("Dimensions:")
+	print("Height:",s.get_image_height())
+	print("Width:",s.get_image_width())
+	print("size:",s.get_file_size())
 
-	
-	
 
+
+
+
+func _on_button_pressed():
+	$"FileDialog".visible=true;
