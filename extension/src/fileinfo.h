@@ -1,8 +1,12 @@
 #ifndef FileInfo_CLASS_H
 #define FileInfo_CLASS_H
 
+#ifdef _WIN32
 #include <windows.h>
-
+#else
+#include <sys/stat.h>
+#include <unistd.h>
+#endif
 #include <godot_cpp/classes/ref.hpp>
 
 using namespace godot;
@@ -26,7 +30,7 @@ class FileInfo : public RefCounted
     uint32_t imageWidth;
     String imageFileType;
     uint32_t fileSize;
-    bool FileInfo::fileTypeDetails(const wchar_t *fn,uint32_t *x, uint32_t*y, String *fileType);
+    bool FileInfo::fileTypeDetails(const char *fn, uint32_t *x, uint32_t *y, String *fileType);
 
 protected:
     static void _bind_methods();
